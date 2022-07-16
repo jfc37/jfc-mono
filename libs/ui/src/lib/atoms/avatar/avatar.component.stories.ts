@@ -2,7 +2,7 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { AvatarComponent } from './avatar.component';
 
 export default {
-  title: 'Atoms/AvatarComponent',
+  title: 'Atoms/Avatar',
   component: AvatarComponent,
   decorators: [
     moduleMetadata({
