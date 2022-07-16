@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'jfc-user-summary',
   templateUrl: './user-summary.component.html',
-  styleUrls: ['./user-summary.component.scss'],
 })
 export class UserSummaryComponent {
   /**

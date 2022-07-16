@@ -5,7 +5,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/ui"],
+      "outputs": [
+        "coverage/libs/ui"
+      ],
       "options": {
         "jestConfig": "libs/ui/jest.config.ts",
         "passWithNoTests": true
@@ -14,7 +16,10 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["libs/ui/**/*.ts", "libs/ui/**/*.html"]
+        "lintFilePatterns": [
+          "libs/ui/**/*.ts",
+          "libs/ui/**/*.html"
+        ]
       }
     },
     "storybook": {
@@ -33,11 +38,16 @@
     },
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputDir": "dist/storybook/ui",
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
+        "styles": [
+          "libs/ui/src/styles.scss"
+        ],
         "compodoc": false
       },
       "configurations": {
