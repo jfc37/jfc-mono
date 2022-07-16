@@ -1,1 +1,9 @@
-<p>avatar works!</p>
+<div class="wrapper">
+  <img *ngIf="src; else fallbackAvatar" [src]="src" alt="User Avatar" />
+</div>
+
+<ng-template #fallbackAvatar>
+  <div class="initials-wrapper">
+    <span class="initials">{{ initials }}</span>
+  </div>
+</ng-template>
