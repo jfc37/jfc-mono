@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AlertType } from '../../molecules/alert/alert.component';
 import { toolkitAnimations } from '../../styles/animations';
 
@@ -52,6 +52,20 @@ export class SignInComponent implements OnInit, OnChanges {
   public signUpRoute = '';
 
   /**
+   * Require password
+   * Defaults to false
+   */
+  @Input()
+  public requirePassword = false;
+
+  /**
+   * Require email
+   * Defaults to true
+   */
+  @Input()
+  public requireEmail = true;
+
+  /**
    * Route to forgotten password page
    */
   @Input()
@@ -74,26 +88,10 @@ export class SignInComponent implements OnInit, OnChanges {
   public alertMessage = '';
 
   /**
-   * Social login options.
-   *
-   * Options: facebook | twitter | github
-   *
-   */
-  @Input()
-  public socialLogins: SocialLogin[] = [];
-
-  /**
    * Allow users to sign in anonymously?
    */
   @Input()
   public allowAnonymousSignIn = false;
-
-  /**
-   * Allow users to sign in with email and password?
-   * This is the default mechanism for signing in.
-   */
-  @Input()
-  public allowEmailAndPasswordSignIn = true;
 
   /**
    * Text to display in the main sign in button.
@@ -106,7 +104,7 @@ export class SignInComponent implements OnInit, OnChanges {
    * Emits the requested sign in
    */
   @Output()
-  public signIn = new EventEmitter<SignInModel | undefined>();
+  public signIn = new EventEmitter<Partial<SignInModel> | undefined>();
 
   /**
    * Emits the requested anonymous sign in
@@ -115,15 +113,14 @@ export class SignInComponent implements OnInit, OnChanges {
   public signInAnonymously = new EventEmitter<void>();
 
   /**
-   * Emits the requested social sign in
+   * @ignore
    */
-  @Output()
-  public socialSignIn = new EventEmitter<SocialLogin>();
+  public emailControl!: FormControl;
 
   /**
    * @ignore
    */
-  public signInForm!: FormGroup;
+  public passwordControl!: FormControl;
 
   /**
    * @ignore
@@ -131,12 +128,11 @@ export class SignInComponent implements OnInit, OnChanges {
   public passwordInputType: 'password' | 'text' = 'password';
 
   public get emailError(): string {
-    const required = this.getRequiredError('email');
-    if (required) {
-      return required;
+    if (this.emailControl.hasError('required')) {
+      return 'This is required';
     }
 
-    if (this.signInForm.get('email')?.hasError('email')) {
+    if (this.emailControl.hasError('email')) {
       return 'Please enter a valid email address';
     }
 
@@ -144,7 +140,11 @@ export class SignInComponent implements OnInit, OnChanges {
   }
 
   public get passwordError(): string {
-    return this.getRequiredError('password');
+    if (this.passwordControl.hasError('required')) {
+      return 'This is required';
+    }
+
+    return '';
   }
 
   public get passwordIcon(): string {
@@ -155,33 +155,17 @@ export class SignInComponent implements OnInit, OnChanges {
     }
   }
 
-  public get allowSocialLogin(): boolean {
-    return this.socialLogins.length > 0;
-  }
-
-  public get hasFacebookLogin(): boolean {
-    return this.socialLogins.includes('facebook');
-  }
-
-  public get hasGithubLogin(): boolean {
-    return this.socialLogins.includes('github');
-  }
-
-  public get hasTwitterLogin(): boolean {
-    return this.socialLogins.includes('twitter');
-  }
-
   constructor(private _formBuilder: FormBuilder) {}
 
   /**
    * @ignore
    */
   public ngOnInit(): void {
-    this.signInForm = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      rememberMe: [''],
-    });
+    this.emailControl = this._formBuilder.control('', [
+      Validators.required,
+      Validators.email,
+    ]);
+    this.passwordControl = this._formBuilder.control('', [Validators.required]);
 
     this.setupLoadingState();
   }
@@ -190,7 +174,13 @@ export class SignInComponent implements OnInit, OnChanges {
    * @ignore
    */
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['loading'] && !changes['loading'].isFirstChange()) {
+    const loadingChange =
+      changes['loading'] && !changes['loading'].isFirstChange();
+    const requireEmailChange =
+      changes['requireEmail'] && !changes['requireEmail'].isFirstChange();
+    const requirePasswordChange =
+      changes['requirePassword'] && !changes['requirePassword'].isFirstChange();
+    if (loadingChange || requireEmailChange || requirePasswordChange) {
       this.setupLoadingState();
     }
   }
@@ -199,10 +189,16 @@ export class SignInComponent implements OnInit, OnChanges {
    * @ignore
    */
   private setupLoadingState(): void {
-    if (this.loading) {
-      this.signInForm.disable();
+    if (this.loading || !this.requireEmail) {
+      this.emailControl.disable();
     } else {
-      this.signInForm.enable();
+      this.emailControl.enable();
+    }
+
+    if (this.loading || !this.requirePassword) {
+      this.passwordControl.disable();
+    } else {
+      this.passwordControl.enable();
     }
   }
 
@@ -221,18 +217,22 @@ export class SignInComponent implements OnInit, OnChanges {
    * @ignore
    */
   public onFormSubmit(): void {
-    if (!this.allowEmailAndPasswordSignIn) {
+    if (!this.requireEmail && !this.requirePassword) {
       this.signIn.emit();
-    } else if (this.signInForm.valid) {
-      this.signIn.emit(this.signInForm.value);
+    } else if (this.requireEmail && this.requirePassword) {
+      if (this.emailControl.valid && this.passwordControl.valid) {
+        this.signIn.emit({
+          email: this.emailControl.value,
+          password: this.passwordControl.value,
+        });
+      }
+    } else {
+      if (this.emailControl.valid) {
+        this.signIn.emit({
+          email: this.emailControl.value,
+        });
+      }
     }
-  }
-
-  /**
-   * @ignore
-   */
-  public socialLoginClick(social: SocialLogin) {
-    this.socialSignIn.emit(social);
   }
 
   /**
@@ -240,17 +240,6 @@ export class SignInComponent implements OnInit, OnChanges {
    */
   public anonymousLoginClick() {
     this.signInAnonymously.emit();
-  }
-
-  /**
-   * @ignore
-   */
-  private getRequiredError(formControlName: string): string {
-    if (this.signInForm.get(formControlName)?.hasError('required')) {
-      return 'This is required';
-    }
-
-    return '';
   }
 }
 
@@ -260,7 +249,4 @@ export class SignInComponent implements OnInit, OnChanges {
 export interface SignInModel {
   email: string;
   password: string;
-  rememberMe: boolean;
 }
-
-export type SocialLogin = 'facebook' | 'twitter' | 'github';
