@@ -46,7 +46,8 @@
         "configDir": "libs/ui/.storybook",
         "browserTarget": "ui:build-storybook",
         "styles": [
-          "libs/ui/src/styles.scss"
+          "libs/ui/src/styles.scss",
+          "libs/ui/.storybook/deeppurple-amber.css"
         ],
         "compodoc": false
       },
