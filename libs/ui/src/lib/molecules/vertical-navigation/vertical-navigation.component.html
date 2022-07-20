@@ -1,0 +1,10 @@
+<aside
+  class="sticky flex flex-col flex-auto top-0 right-0 w-72 h-screen max-h-screen min-h-screen bg-black/90"
+>
+  <ng-container *ngFor="let item of navigationItems">
+    <jfc-vertical-navigation-basic-item
+      *ngIf="item.type === 'basic'"
+      [item]="item"
+    ></jfc-vertical-navigation-basic-item>
+  </ng-container>
+</aside>

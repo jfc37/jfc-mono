@@ -15,6 +15,8 @@ import { SignInComponent } from './templates/sign-in/sign-in.component';
 import { SignUpComponent } from './templates/sign-up/sign-up.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VerticalNavigationComponent } from './molecules/vertical-navigation/vertical-navigation.component';
+import { VerticalNavigationBasicItemComponent } from './molecules/vertical-navigation/vertical-navigation-basic-item/vertical-navigation-basic-item.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SignInComponent,
     SignUpComponent,
     AlertComponent,
+    VerticalNavigationComponent,
+    VerticalNavigationBasicItemComponent,
   ],
   exports: [
     AvatarComponent,
@@ -44,6 +48,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SignInComponent,
     SignUpComponent,
     AlertComponent,
+    VerticalNavigationComponent,
   ],
 })
 export class UiModule {}
