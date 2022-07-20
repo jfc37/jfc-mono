@@ -12,6 +12,7 @@ import { AlertComponent } from './molecules/alert/alert.component';
 import { IconsModule } from './styles/icons/icons.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SignInComponent } from './templates/sign-in/sign-in.component';
+import { SignUpComponent } from './templates/sign-up/sign-up.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,12 +35,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AvatarComponent,
     UserSummaryComponent,
     SignInComponent,
+    SignUpComponent,
     AlertComponent,
   ],
   exports: [
     AvatarComponent,
     UserSummaryComponent,
     SignInComponent,
+    SignUpComponent,
     AlertComponent,
   ],
 })

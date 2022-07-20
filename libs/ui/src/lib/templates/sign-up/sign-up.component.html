@@ -71,12 +71,12 @@
         <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">
           Sign in
         </div>
-        <div *ngIf="signUpRoute" class="flex items-baseline mt-0.5 font-medium">
-          <div>Don't have an account?</div>
+        <div *ngIf="signInRoute" class="flex items-baseline mt-0.5 font-medium">
+          <div>Already have an account?</div>
           <a
             class="ml-1 text-blue-500 hover:underline"
-            [routerLink]="[signUpRoute]"
-            >Sign up
+            [routerLink]="[signInRoute]"
+            >Sign in
           </a>
         </div>
 
@@ -94,6 +94,19 @@
 
         <!-- Sign in form -->
         <form class="mt-8" #signInNgForm="ngForm">
+          <!-- Name field -->
+          <mat-form-field
+            *ngIf="requireName"
+            class="w-full"
+            appearance="outline"
+          >
+            <mat-label>Full name</mat-label>
+            <input id="name" matInput [formControl]="nameControl" />
+            <mat-error *ngIf="nameError">
+              {{ nameError }}
+            </mat-error>
+          </mat-form-field>
+
           <!-- Email field -->
           <mat-form-field
             *ngIf="requireEmail"
@@ -133,15 +146,33 @@
             </mat-error>
           </mat-form-field>
 
-          <!-- Actions -->
-          <div class="inline-flex items-end justify-end w-full mt-1.5">
-            <a
-              *ngIf="forgotPasswordRoute"
-              class="text-md font-medium text-blue-500 hover:underline pb-5"
-              [routerLink]="[forgotPasswordRoute]"
-              >Forgot password?
-            </a>
-          </div>
+          <!-- Terms of service -->
+          <mat-form-field
+            *ngIf="termsOfServiceRoute"
+            floatPlaceholder="always"
+            class="w-full mat-form-field--no-underline"
+            appearance="outline"
+          >
+            <!-- the matInput with display:none makes the magic. It's ugly, I've warned you -->
+            <input
+              matInput
+              [formControl]="agreeToTermsControl"
+              placeholder="Input"
+              style="display: none"
+            />
+            <mat-checkbox [formControl]="agreeToTermsControl" color="primary"
+              >I agree to the
+              <a
+                class="text-md font-medium text-blue-500 hover:underline pb-5"
+                [routerLink]="[termsOfServiceRoute]"
+                target="_blank"
+                >terms of service
+              </a></mat-checkbox
+            >
+            <mat-error *ngIf="passwordError">
+              {{ passwordError }}
+            </mat-error>
+          </mat-form-field>
 
           <!-- Submit button -->
           <button
@@ -151,7 +182,7 @@
             [disabled]="loading"
             (click)="onFormSubmit()"
           >
-            <span *ngIf="!loading"> {{ signInText }} </span>
+            <span *ngIf="!loading"> {{ signUpText }} </span>
             <mat-progress-spinner
               *ngIf="loading"
               [diameter]="24"
@@ -159,28 +190,6 @@
               class="mr-auto ml-auto"
             ></mat-progress-spinner>
           </button>
-
-          <ng-container *ngIf="allowAnonymousSignIn">
-            <!-- Separator -->
-            <div class="flex items-center mt-8">
-              <div class="flex-auto mt-px border-t"></div>
-              <div class="mx-2 text-secondary">Or</div>
-              <div class="flex-auto mt-px border-t"></div>
-            </div>
-
-            <!-- Anonymous sign-on button -->
-            <div class="flex items-center mt-8 space-x-4">
-              <button
-                [disabled]="loading"
-                (click)="anonymousLoginClick()"
-                class="flex-auto"
-                type="button"
-                mat-stroked-button
-              >
-                Sign in anonymously
-              </button>
-            </div>
-          </ng-container>
         </form>
       </div>
     </div>
