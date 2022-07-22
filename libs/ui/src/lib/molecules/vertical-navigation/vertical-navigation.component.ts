@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { BasicNavigationItem } from './vertical-navigation-basic-item/vertical-navigation-basic-item.component';
 import { DivderNavigationItem } from './vertical-navigation-divider-item/vertical-navigation-divider-item.component';
+import { GroupNavigationItem } from './vertical-navigation-group-item/vertical-navigation-group-item.component';
 import { TextNavigationItem } from './vertical-navigation-text-item/vertical-navigation-text-item.component';
 
 @Component({
@@ -16,5 +17,6 @@ export class VerticalNavigationComponent {
 
 export type NavigationTypes =
   | BasicNavigationItem
+  | GroupNavigationItem
   | TextNavigationItem
   | DivderNavigationItem;
