@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { BasicNavigationItem } from './vertical-navigation-basic-item/vertical-navigation-basic-item.component';
+import { TextNavigationItem } from './vertical-navigation-text-item/vertical-navigation-text-item.component';
 
 @Component({
   selector: 'jfc-vertical-navigation',
@@ -12,4 +13,4 @@ export class VerticalNavigationComponent {
   navigationItems: NavigationTypes[] = [];
 }
 
-export type NavigationTypes = BasicNavigationItem;
+export type NavigationTypes = BasicNavigationItem | TextNavigationItem;

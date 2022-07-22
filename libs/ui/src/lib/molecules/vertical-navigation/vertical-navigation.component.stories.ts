@@ -24,6 +24,11 @@ Primary.argTypes = {};
 Primary.args = {
   navigationItems: [
     {
+      title: 'Basics',
+      subtext: 'Just the basics',
+      type: 'text',
+    },
+    {
       title: 'Basic 1',
       route: '/basic-1',
       icon: 'heroicons_outline:bell',

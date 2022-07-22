@@ -6,5 +6,10 @@
       *ngIf="item.type === 'basic'"
       [item]="item"
     ></jfc-vertical-navigation-basic-item>
+
+    <jfc-vertical-navigation-text-item
+      *ngIf="item.type === 'text'"
+      [item]="item"
+    ></jfc-vertical-navigation-text-item>
   </ng-container>
 </aside>

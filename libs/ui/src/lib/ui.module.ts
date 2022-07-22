@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerticalNavigationComponent } from './molecules/vertical-navigation/vertical-navigation.component';
 import { VerticalNavigationBasicItemComponent } from './molecules/vertical-navigation/vertical-navigation-basic-item/vertical-navigation-basic-item.component';
+import { VerticalNavigationTextItemComponent } from './molecules/vertical-navigation/vertical-navigation-text-item/vertical-navigation-text-item.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { VerticalNavigationBasicItemComponent } from './molecules/vertical-navig
     AlertComponent,
     VerticalNavigationComponent,
     VerticalNavigationBasicItemComponent,
+    VerticalNavigationTextItemComponent,
   ],
   exports: [
     AvatarComponent,
