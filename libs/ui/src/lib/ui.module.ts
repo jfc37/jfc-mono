@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerticalNavigationComponent } from './molecules/vertical-navigation/vertical-navigation.component';
 import { VerticalNavigationBasicItemComponent } from './molecules/vertical-navigation/vertical-navigation-basic-item/vertical-navigation-basic-item.component';
 import { VerticalNavigationTextItemComponent } from './molecules/vertical-navigation/vertical-navigation-text-item/vertical-navigation-text-item.component';
+import { VerticalNavigationDividerItemComponent } from './molecules/vertical-navigation/vertical-navigation-divider-item/vertical-navigation-divider-item.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { VerticalNavigationTextItemComponent } from './molecules/vertical-naviga
     VerticalNavigationComponent,
     VerticalNavigationBasicItemComponent,
     VerticalNavigationTextItemComponent,
+    VerticalNavigationDividerItemComponent,
   ],
   exports: [
     AvatarComponent,

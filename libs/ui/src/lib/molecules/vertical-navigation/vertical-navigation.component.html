@@ -11,5 +11,9 @@
       *ngIf="item.type === 'text'"
       [item]="item"
     ></jfc-vertical-navigation-text-item>
+
+    <jfc-vertical-navigation-divider-item
+      *ngIf="item.type === 'divider'"
+    ></jfc-vertical-navigation-divider-item>
   </ng-container>
 </aside>

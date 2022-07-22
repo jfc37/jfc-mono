@@ -40,6 +40,9 @@ Primary.args = {
       type: 'basic',
     },
     {
+      type: 'divider',
+    },
+    {
       title: 'Basic 2',
       route: '/basic-2',
       icon: 'heroicons_outline:ban',
