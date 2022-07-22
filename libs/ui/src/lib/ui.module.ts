@@ -20,6 +20,7 @@ import { VerticalNavigationBasicItemComponent } from './molecules/vertical-navig
 import { VerticalNavigationTextItemComponent } from './molecules/vertical-navigation/vertical-navigation-text-item/vertical-navigation-text-item.component';
 import { VerticalNavigationDividerItemComponent } from './molecules/vertical-navigation/vertical-navigation-divider-item/vertical-navigation-divider-item.component';
 import { VerticalNavigationGroupItemComponent } from './molecules/vertical-navigation/vertical-navigation-group-item/vertical-navigation-group-item.component';
+import { TopBarComponent } from './molecules/top-bar/top-bar.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { VerticalNavigationGroupItemComponent } from './molecules/vertical-navig
     VerticalNavigationTextItemComponent,
     VerticalNavigationDividerItemComponent,
     VerticalNavigationGroupItemComponent,
+    TopBarComponent,
   ],
   exports: [
     AvatarComponent,
@@ -55,6 +57,7 @@ import { VerticalNavigationGroupItemComponent } from './molecules/vertical-navig
     SignUpComponent,
     AlertComponent,
     VerticalNavigationComponent,
+    TopBarComponent,
   ],
 })
 export class UiModule {}

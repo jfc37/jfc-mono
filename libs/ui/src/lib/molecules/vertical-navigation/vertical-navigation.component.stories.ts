@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { VerticalNavigationComponent } from './vertical-navigation.component';
 
 export default {
-  title: 'Molecules / VerticalNavigationComponent',
+  title: 'Molecules / Vertical Navigation',
   component: VerticalNavigationComponent,
   decorators: [
     moduleMetadata({
