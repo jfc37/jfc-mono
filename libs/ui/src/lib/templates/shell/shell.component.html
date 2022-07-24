@@ -1,0 +1,18 @@
+<div class="flex relative">
+  <jfc-vertical-navigation
+    class="w-fit md:absolute lg:relative"
+    *ngIf="showNavigation"
+    [navigationItems]="navigationItems"
+  >
+    <jfc-user-summary
+      initials="TB"
+      title="Tom Brady"
+      subtitle="tom.brady@nfl.com"
+    ></jfc-user-summary>
+  </jfc-vertical-navigation>
+  <div class="flex flex-col flex-1">
+    <jfc-top-bar class="w-full" [showToggle]="true" (toggle)="toggle()">
+    </jfc-top-bar>
+    <ng-content></ng-content>
+  </div>
+</div>

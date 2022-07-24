@@ -11,3 +11,5 @@ export * from './lib/molecules/alert/alert.component';
 export * from './lib/molecules/vertical-navigation/vertical-navigation.component';
 
 export * from './lib/molecules/top-bar/top-bar.component';
+
+export * from './lib/templates/shell/shell.component';
