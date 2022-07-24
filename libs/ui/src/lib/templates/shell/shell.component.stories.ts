@@ -18,6 +18,13 @@ const Template: Story<ShellComponent> = (args: ShellComponent) => ({
   template: `
   <jfc-shell [navigationItems]="navigationItems">
     <h1>Hello there, from the shell!</h1>
+    <jfc-user-summary
+      navSlot
+      initials="TB"
+      title="Tom Brady"
+      subtitle="tom.brady@nfl.com"
+    ></jfc-user-summary>
+    <div topBarSlot>Hello Tom!</div>
   </jfc-shell>
   `,
 });

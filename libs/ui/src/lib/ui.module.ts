@@ -22,6 +22,7 @@ import { VerticalNavigationDividerItemComponent } from './molecules/vertical-nav
 import { VerticalNavigationGroupItemComponent } from './molecules/vertical-navigation/vertical-navigation-group-item/vertical-navigation-group-item.component';
 import { TopBarComponent } from './molecules/top-bar/top-bar.component';
 import { ShellComponent } from './templates/shell/shell.component';
+import { MediaWatcherService } from './services/media-watcher.service';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { ShellComponent } from './templates/shell/shell.component';
     IconsModule,
     HttpClientModule,
   ],
+  providers: [MediaWatcherService],
   declarations: [
     AvatarComponent,
     UserSummaryComponent,
