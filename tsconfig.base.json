@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@jfc/ui": ["libs/ui/src/index.ts"]
+      "@jfc/ui": ["libs/ui/src/index.ts"],
+      "@jfc/wrap-firebase": ["libs/wrap-firebase/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
