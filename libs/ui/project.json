@@ -22,6 +22,14 @@
         ]
       }
     },
+    "deploy": {
+      "executor": "angular-cli-ghpages:deploy",
+      "options": {
+        "noBuild": true,
+        "cname": "undefined",
+        "repo": "https://github.com/jfc37/toolkit-storybook.git"
+      }
+    },
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {
@@ -55,6 +63,15 @@
         "ci": {
           "quiet": true
         }
+      }
+    },
+    "build": {
+      "executor": "@storybook/angular:build-storybook",
+      "options": {
+        "outputPath": "dist/storybook/ui"
+      },
+      "configurations": {
+        "production": {}
       }
     }
   },

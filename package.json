@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
+    "deploy:storybook": "ng run ui:build-storybook && ng run ui:deploy",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2020 browser module main",
     "start": "nx serve",
     "build": "nx build",
@@ -52,6 +53,7 @@
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
+    "angular-cli-ghpages": "^1.0.0",
     "autoprefixer": "^10.4.7",
     "cypress": "^9.1.0",
     "eslint": "~8.15.0",
