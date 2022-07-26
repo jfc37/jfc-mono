@@ -1,4 +1,5 @@
 export * from './lib/ui.module';
+export * from './lib/styles/icons/icons.module';
 
 export * from './lib/atoms/avatar/avatar.component';
 
