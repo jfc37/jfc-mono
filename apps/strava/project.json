@@ -1,7 +1,7 @@
 {
   "projectType": "application",
   "sourceRoot": "apps/strava/src",
-  "prefix": "jfc",
+  "prefix": "strava",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",

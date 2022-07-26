@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'jfc-root',
+  selector: 'strava-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
