@@ -4,7 +4,7 @@ import { SignInComponent } from './sign-in.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 export default {
-  title: 'Templates / SignInComponent',
+  title: 'Templates / Sign In',
   component: SignInComponent,
   decorators: [
     moduleMetadata({

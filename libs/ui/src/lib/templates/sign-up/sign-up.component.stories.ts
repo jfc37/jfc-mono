@@ -4,7 +4,7 @@ import { SignUpComponent } from './sign-up.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 export default {
-  title: 'Templates / SignUpComponent',
+  title: 'Templates / Sign Up',
   component: SignUpComponent,
   decorators: [
     moduleMetadata({
