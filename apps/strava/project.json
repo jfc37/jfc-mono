@@ -20,7 +20,8 @@
           "apps/strava/src/assets"
         ],
         "styles": [
-          "apps/strava/src/styles.scss"
+          "apps/strava/src/styles.scss",
+          "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css"
         ],
         "scripts": []
       },
