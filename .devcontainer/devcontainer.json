@@ -42,18 +42,19 @@
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-    "dbaeumer.vscode-eslint",
-    "nrwl.angular-console",
-    "Angular.ng-template",
-    "firsttris.vscode-jest-runner",
-    "ms-vsliveshare.vsliveshare",
-    "ms-vsliveshare.vsliveshare-pack",
-    "esbenp.prettier-vscode",
-    "WallabyJs.quokka-vscode",
-    "stylelint.vscode-stylelint",
-    "WallabyJs.wallaby-vscode",
-    "wesbos.theme-cobalt2"
-  ],
+	"dbaeumer.vscode-eslint",
+	"nrwl.angular-console",
+	"Angular.ng-template",
+	"firsttris.vscode-jest-runner",
+	"ms-vsliveshare.vsliveshare",
+	"ms-vsliveshare.vsliveshare-pack",
+	"esbenp.prettier-vscode",
+	"WallabyJs.quokka-vscode",
+	"stylelint.vscode-stylelint",
+	"WallabyJs.wallaby-vscode",
+	"wesbos.theme-cobalt2",
+	"bradlc.vscode-tailwindcss"
+],
 
   // Speed up yarn install
   "mounts": [
