@@ -12,13 +12,13 @@ export class FirebaseUserService {
    * Gets the id of the currently logged in user
    */
   public getId(): Observable<string> {
-    return this._getAuthUser().pipe(map(user => user.uid));
+    return this._getAuthUser().pipe(map((user) => user.uid));
   }
 
   public getDisplayName(): Observable<string> {
     return this._getAuthUser().pipe(
       filter<firebase.default.User>(Boolean),
-      map(user => user.displayName || user.email || 'Anonymous')
+      map((user) => user.displayName || user.email || 'Anonymous')
     );
   }
 
@@ -62,7 +62,7 @@ export class FirebaseUserService {
 
   private _getAuthUser(): Observable<firebase.default.User> {
     return this._auth.user.pipe(
-      filter(user => Boolean(user))
+      filter((user) => Boolean(user))
     ) as Observable<firebase.default.User>;
   }
 }

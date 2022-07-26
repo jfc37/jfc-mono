@@ -95,7 +95,14 @@
       }
     },
     "deploy": {
-      "executor": "angular-cli-ghpages:deploy"
+      "executor": "@angular/fire:deploy",
+      "options": {
+        "prerender": false,
+        "ssr": false,
+        "browserTarget": "todos:build:production",
+        "firebaseProject": "bite-size-lessons",
+        "firebaseHostingSite": "bite-size-lessons"
+      }
     }
   },
   "tags": []

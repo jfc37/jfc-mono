@@ -5,7 +5,9 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/strava",
         "index": "apps/strava/src/index.html",
@@ -13,8 +15,13 @@
         "polyfills": "apps/strava/src/polyfills.ts",
         "tsConfig": "apps/strava/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/strava/src/favicon.ico", "apps/strava/src/assets"],
-        "styles": ["apps/strava/src/styles.scss"],
+        "assets": [
+          "apps/strava/src/favicon.ico",
+          "apps/strava/src/assets"
+        ],
+        "styles": [
+          "apps/strava/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -71,12 +78,17 @@
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "options": {
-        "lintFilePatterns": ["apps/strava/**/*.ts", "apps/strava/**/*.html"]
+        "lintFilePatterns": [
+          "apps/strava/**/*.ts",
+          "apps/strava/**/*.html"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/strava"],
+      "outputs": [
+        "coverage/apps/strava"
+      ],
       "options": {
         "jestConfig": "apps/strava/jest.config.ts",
         "passWithNoTests": true
