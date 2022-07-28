@@ -94,6 +94,14 @@
         "jestConfig": "apps/strava/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "deploy": {
+      "executor": "angular-cli-ghpages:deploy",
+      "options": {
+        "cname": "",
+        "repo": "https://github.com/jfc37/strava-visuals.git",
+        "baseHref": "https://jfc37.github.io/strava-visuals/"
+      }
     }
   },
   "tags": []
