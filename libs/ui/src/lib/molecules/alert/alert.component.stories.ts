@@ -1,5 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { UiModule } from '../../ui.module';
+import { UiStorybookModule } from '../../ui-story.module';
 import { AlertAppearance, AlertComponent } from './alert.component';
 
 export default {
@@ -44,7 +45,7 @@ export default {
   component: AlertComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiModule],
+      imports: [UiModule, UiStorybookModule],
     }),
   ],
 } as Meta<AlertComponent>;

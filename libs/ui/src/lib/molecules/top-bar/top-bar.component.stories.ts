@@ -1,6 +1,7 @@
-import { MatIconModule } from '@angular/material/icon';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { UiModule } from '../../ui.module';
+import { UiStorybookModule } from '../../ui-story.module';
+import { MatIconModule } from '@angular/material/icon';
 import { TopBarComponent } from './top-bar.component';
 
 export default {
@@ -8,7 +9,7 @@ export default {
   component: TopBarComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiModule, MatIconModule],
+      imports: [UiModule, UiStorybookModule, MatIconModule],
     }),
   ],
   argTypes: {

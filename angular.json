@@ -2,9 +2,12 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "strava": "apps/strava",
+    "strava-e2e": "apps/strava-e2e",
     "todos": "apps/todos",
     "todos-e2e": "apps/todos-e2e",
     "ui": "libs/ui",
-    "ui-e2e": "apps/ui-e2e"
+    "ui-e2e": "apps/ui-e2e",
+    "wrap-firebase": "libs/wrap-firebase"
   }
 }

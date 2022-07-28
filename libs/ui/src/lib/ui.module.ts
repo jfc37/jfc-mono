@@ -27,7 +27,6 @@ import { MediaWatcherService } from './services/media-watcher.service';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,7 +35,6 @@ import { MediaWatcherService } from './services/media-watcher.service';
     MatInputModule,
     MatProgressSpinnerModule,
     MatButtonModule,
-    IconsModule,
     HttpClientModule,
   ],
   providers: [MediaWatcherService],

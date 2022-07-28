@@ -1,6 +1,6 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { UiModule } from '../../ui.module';
-import { RouterTestingModule } from '@angular/router/testing';
+import { UiStorybookModule } from '../../ui-story.module';
 import { VerticalNavigationComponent } from './vertical-navigation.component';
 
 export default {
@@ -8,7 +8,7 @@ export default {
   component: VerticalNavigationComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiModule, RouterTestingModule],
+      imports: [UiModule, UiStorybookModule],
     }),
   ],
 } as Meta<VerticalNavigationComponent>;

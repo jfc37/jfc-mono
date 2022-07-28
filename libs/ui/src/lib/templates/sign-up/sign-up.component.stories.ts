@@ -1,14 +1,14 @@
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { UiModule } from '../../ui.module';
 import { SignUpComponent } from './sign-up.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { UiStorybookModule } from '../../ui-story.module';
 
 export default {
   title: 'Templates / Sign Up',
   component: SignUpComponent,
   decorators: [
     moduleMetadata({
-      imports: [UiModule, RouterTestingModule],
+      imports: [UiModule, UiStorybookModule],
     }),
   ],
 } as Meta<SignUpComponent>;
