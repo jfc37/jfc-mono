@@ -1,9 +1,0 @@
-<div class="mb-1 ml-3 mr-3">
-  <a
-    [routerLink]="item.route"
-    class="flex items-center justify-start py-3 px-4 font-medium leading-5 no-underline rounded-md text-white/80 hover:text-white hover:bg-white/20"
-  >
-    <mat-icon *ngIf="item.icon" [svgIcon]="item.icon" class="mr-4"></mat-icon>
-    <div [ngClass]="{ 'pl-10': !item.icon }">{{ item.title }}</div>
-  </a>
-</div>
