@@ -1,0 +1,33 @@
+{
+  "name": "know-your-marbles-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/know-your-marbles-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/know-your-marbles-e2e/cypress.config.ts",
+        "devServerTarget": "know-your-marbles:serve:development",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "know-your-marbles:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "know-your-marbles:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/know-your-marbles-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["know-your-marbles"]
+}
