@@ -46,6 +46,53 @@
           "libs/ui-toolkit/**/*.html"
         ]
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/ui-toolkit/.storybook",
+        "browserTarget": "ui-toolkit:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ui-toolkit",
+        "configDir": "libs/ui-toolkit/.storybook",
+        "browserTarget": "ui-toolkit:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/ui-toolkit/.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "ui-toolkit:build-storybook",
+        "staticFilePath": "dist/storybook/ui-toolkit"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "ui-toolkit:build-storybook:ci"
+        }
+      }
     }
   }
 }
