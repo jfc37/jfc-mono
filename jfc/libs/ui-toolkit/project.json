@@ -1,0 +1,51 @@
+{
+  "name": "ui-toolkit",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui-toolkit/src",
+  "prefix": "jfc",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ui-toolkit/ng-package.json",
+        "tailwindConfig": "libs/ui-toolkit/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ui-toolkit/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ui-toolkit/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/ui-toolkit/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/ui-toolkit/**/*.ts",
+          "libs/ui-toolkit/**/*.html"
+        ]
+      }
+    }
+  }
+}
