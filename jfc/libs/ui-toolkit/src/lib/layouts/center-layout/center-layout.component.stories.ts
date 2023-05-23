@@ -8,6 +8,9 @@ export default {
     maxWidth: {
       control: 'text',
     },
+    padding: {
+      control: 'text',
+    },
     backgroundColor: {
       control: 'color',
     },
@@ -31,12 +34,14 @@ export const Editable = (args: CenterLayoutComponent) => ({
   props: args,
   template: `<jfc-center-layout
     [maxWidth]="maxWidth"
+    [padding]="padding"
     [backgroundColor]="backgroundColor"
     [contentBackgroundColor]="contentBackgroundColor"
     >{{content}}</jfc-center-layout>`,
 });
 Editable.args = {
   maxWidth: '400px',
+  padding: '1.5rem',
   backgroundColor: 'grey',
   contentBackgroundColor: 'whitesmoke',
   content: 'Something',

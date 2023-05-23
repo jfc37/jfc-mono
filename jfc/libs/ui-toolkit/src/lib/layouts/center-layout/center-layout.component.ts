@@ -26,6 +26,12 @@ export class CenterLayoutComponent {
   public maxWidth: string = '850px';
 
   /**
+   * Padding around the content
+   */
+  @Input()
+  public padding: string = '1rem';
+
+  /**
    * Background color of the side bars
    */
   @Input()

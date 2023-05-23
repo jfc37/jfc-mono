@@ -2,5 +2,7 @@
   [style.maxWidth]="maxWidth"
   [style.backgroundColor]="contentBackgroundColor"
 >
-  <ng-content></ng-content>
+  <div [style.padding]="padding">
+    <ng-content></ng-content>
+  </div>
 </main>
