@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
       "options": {
         "project": "libs/ui-toolkit/ng-package.json",
         "tailwindConfig": "libs/ui-toolkit/tailwind.config.js"
@@ -25,7 +27,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "libs/ui-toolkit/jest.config.ts",
         "passWithNoTests": true
@@ -39,7 +43,9 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "libs/ui-toolkit/**/*.ts",
@@ -53,7 +59,13 @@
         "port": 4400,
         "configDir": "libs/ui-toolkit/.storybook",
         "browserTarget": "ui-toolkit:build-storybook",
-        "compodoc": false
+        "compodoc": true,
+        "compodocArgs": [
+          "-e",
+          "json",
+          "-d",
+          "libs/ui-toolkit"
+        ]
       },
       "configurations": {
         "ci": {
@@ -63,12 +75,20 @@
     },
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputDir}"],
+      "outputs": [
+        "{options.outputDir}"
+      ],
       "options": {
         "outputDir": "dist/storybook/ui-toolkit",
         "configDir": "libs/ui-toolkit/.storybook",
         "browserTarget": "ui-toolkit:build-storybook",
-        "compodoc": false
+        "compodoc": true,
+        "compodocArgs": [
+          "-e",
+          "json",
+          "-d",
+          "libs/ui-toolkit"
+        ]
       },
       "configurations": {
         "ci": {

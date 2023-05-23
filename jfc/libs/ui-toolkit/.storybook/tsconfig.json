@@ -6,11 +6,11 @@
 
   "exclude": ["../**/*.spec.ts"],
   "include": [
+    "../src/**/*.component.ts",
+    "../src/**/*.component.tsx",
+    "../src/**/*.component.mdx",
     "../src/**/*.stories.ts",
-    "../src/**/*.stories.js",
-    "../src/**/*.stories.jsx",
     "../src/**/*.stories.tsx",
-    "../src/**/*.stories.mdx",
-    "*.js"
+    "../src/**/*.stories.mdx"
   ]
 }
