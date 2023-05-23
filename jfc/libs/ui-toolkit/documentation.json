@@ -9,7 +9,7 @@
     "components": [
         {
             "name": "CenterLayoutComponent",
-            "id": "component-CenterLayoutComponent-65efa1f35b50aed1a89c886d5a60cf714174e875ed7f1432a3f83fcc9ecf66b62feebad6eace9527742388fa0070a0eec71e76608ac3d65ac9083bd20da2cb27",
+            "id": "component-CenterLayoutComponent-97460bd49681bcc4b48bd1836539090ce9ce98c881c58c8aa59328e15f0dc1d19b4af12c76bde8df628786f94996209b55142c4c4cfffd575acc8dbb523bc6bc",
             "file": "libs/ui-toolkit/src/lib/layouts/center-layout/center-layout.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
             "encapsulation": [],
@@ -50,12 +50,12 @@
                     "decorators": []
                 },
                 {
-                    "name": "width",
-                    "defaultValue": "'400px'",
+                    "name": "maxWidth",
+                    "defaultValue": "'850px'",
                     "deprecated": false,
                     "deprecationMessage": "",
-                    "rawdescription": "\n\nWidth of the content\n",
-                    "description": "<p>Width of the content</p>\n",
+                    "rawdescription": "\n\nMax width of the content\nContent will take up the full width until it reaches this max width\n",
+                    "description": "<p>Max width of the content\nContent will take up the full width until it reaches this max width</p>\n",
                     "line": 26,
                     "type": "string",
                     "decorators": []
@@ -80,11 +80,11 @@
             "description": "<p>Layout component that centers its content</p>\n",
             "rawdescription": "\n\nLayout component that centers its content\n",
             "type": "component",
-            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  HostBinding,\n  Input,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n/**\n * Layout component that centers its content\n */\n@Component({\n  selector: 'jfc-center-layout',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './center-layout.component.html',\n  styleUrls: ['./center-layout.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class CenterLayoutComponent {\n\n  /**\n   * Width of the content\n   */\n  @Input()\n  public width: string = '400px';\n\n  /**\n   * Background color of the side bars\n   */\n  @Input()\n  public backgroundColor: string = 'black';\n\n  /**\n   * Background color of the content\n   */\n  @Input()\n  public contentBackgroundColor: string = 'white';\n\n  @HostBinding('style.backgroundColor') get getBackgroundColor() {\n    return this.backgroundColor;\n  }\n\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  HostBinding,\n  Input,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\n\n/**\n * Layout component that centers its content\n */\n@Component({\n  selector: 'jfc-center-layout',\n  standalone: true,\n  imports: [CommonModule],\n  templateUrl: './center-layout.component.html',\n  styleUrls: ['./center-layout.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class CenterLayoutComponent {\n  /**\n   * Max width of the content\n   * Content will take up the full width until it reaches this max width\n   */\n  @Input()\n  public maxWidth: string = '850px';\n\n  /**\n   * Background color of the side bars\n   */\n  @Input()\n  public backgroundColor: string = 'black';\n\n  /**\n   * Background color of the content\n   */\n  @Input()\n  public contentBackgroundColor: string = 'white';\n\n  @HostBinding('style.backgroundColor') get getBackgroundColor() {\n    return this.backgroundColor;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": ":host {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n}\n\nmain {\n  width: 400px;\n  height: 100%;\n  background-color: white;\n}\n",
+                    "data": ":host {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n}\n\nmain {\n  width: 100%;\n  height: 100%;\n  background-color: white;\n}\n",
                     "styleUrl": "./center-layout.component.scss"
                 }
             ],
@@ -100,7 +100,7 @@
                     }
                 }
             },
-            "templateData": "<main [style.width]=\"width\" [style.backgroundColor]=\"contentBackgroundColor\">\n  <ng-content></ng-content>\n</main>\n"
+            "templateData": "<main\n  [style.maxWidth]=\"maxWidth\"\n  [style.backgroundColor]=\"contentBackgroundColor\"\n>\n  <ng-content></ng-content>\n</main>\n"
         }
     ],
     "modules": [],
@@ -124,7 +124,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "",
-                "defaultValue": "(args: CenterLayoutComponent) => ({\n  component: CenterLayoutComponent,\n  props: args,\n  template: `<jfc-center-layout\n    [width]=\"width\"\n    [backgroundColor]=\"backgroundColor\"\n    [contentBackgroundColor]=\"contentBackgroundColor\"\n    >{{content}}</jfc-center-layout>`,\n})"
+                "defaultValue": "(args: CenterLayoutComponent) => ({\n  component: CenterLayoutComponent,\n  props: args,\n  template: `<jfc-center-layout\n    [maxWidth]=\"maxWidth\"\n    [backgroundColor]=\"backgroundColor\"\n    [contentBackgroundColor]=\"contentBackgroundColor\"\n    >{{content}}</jfc-center-layout>`,\n})"
             }
         ],
         "functions": [],
@@ -150,7 +150,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "",
-                    "defaultValue": "(args: CenterLayoutComponent) => ({\n  component: CenterLayoutComponent,\n  props: args,\n  template: `<jfc-center-layout\n    [width]=\"width\"\n    [backgroundColor]=\"backgroundColor\"\n    [contentBackgroundColor]=\"contentBackgroundColor\"\n    >{{content}}</jfc-center-layout>`,\n})"
+                    "defaultValue": "(args: CenterLayoutComponent) => ({\n  component: CenterLayoutComponent,\n  props: args,\n  template: `<jfc-center-layout\n    [maxWidth]=\"maxWidth\"\n    [backgroundColor]=\"backgroundColor\"\n    [contentBackgroundColor]=\"contentBackgroundColor\"\n    >{{content}}</jfc-center-layout>`,\n})"
                 }
             ]
         },

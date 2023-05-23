@@ -5,7 +5,7 @@ export default {
   title: 'Layouts / Center',
   component: CenterLayoutComponent,
   argTypes: {
-    width: {
+    maxWidth: {
       control: 'text',
     },
     backgroundColor: {
@@ -30,13 +30,13 @@ export const Editable = (args: CenterLayoutComponent) => ({
   component: CenterLayoutComponent,
   props: args,
   template: `<jfc-center-layout
-    [width]="width"
+    [maxWidth]="maxWidth"
     [backgroundColor]="backgroundColor"
     [contentBackgroundColor]="contentBackgroundColor"
     >{{content}}</jfc-center-layout>`,
 });
 Editable.args = {
-  width: '400px',
+  maxWidth: '400px',
   backgroundColor: 'grey',
   contentBackgroundColor: 'whitesmoke',
   content: 'Something',

@@ -18,12 +18,12 @@ import { CommonModule } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CenterLayoutComponent {
-
   /**
-   * Width of the content
+   * Max width of the content
+   * Content will take up the full width until it reaches this max width
    */
   @Input()
-  public width: string = '400px';
+  public maxWidth: string = '850px';
 
   /**
    * Background color of the side bars
@@ -40,5 +40,4 @@ export class CenterLayoutComponent {
   @HostBinding('style.backgroundColor') get getBackgroundColor() {
     return this.backgroundColor;
   }
-
 }
