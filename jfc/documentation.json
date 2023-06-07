@@ -3,12 +3,12 @@
     "interfaces": [
         {
             "name": "SignInModel",
-            "id": "interface-SignInModel-61f2a22c44f427f927cd00c78e8f1243f7e3d590e9e53357578d43fe74c14a6cee523f6f6384508eae60a3ec3338f5c807f36be64584dc749b23de6d674644e6",
+            "id": "interface-SignInModel-8865717ccccc6bf63c5a21ae98d35e42cb9603d859ea15107e0c41ef9e0d903f2a2756f9139f400c0a556419968f107106c62a316aa358cbf43c3c7a1cfc5e61",
             "file": "libs/ui-toolkit/src/lib/templates/sign-in/sign-in.component.ts",
             "deprecated": false,
             "deprecationMessage": "",
             "type": "interface",
-            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  EventEmitter,\n  Input,\n  OnChanges,\n  OnInit,\n  Output,\n  SimpleChanges,\n  ViewEncapsulation,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {\n  FormBuilder,\n  FormControl,\n  FormsModule,\n  ReactiveFormsModule,\n  Validators,\n} from '@angular/forms';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatCheckboxModule } from '@angular/material/checkbox';\nimport { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\nimport { MatButtonModule } from '@angular/material/button';\nimport { toolkitAnimations } from '../../styles/animations';\n\n@Component({\n  selector: 'jfc-sign-in',\n  standalone: true,\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatIconModule,\n    MatCheckboxModule,\n    MatInputModule,\n    MatProgressSpinnerModule,\n    MatButtonModule,\n  ],\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  animations: toolkitAnimations,\n  encapsulation: ViewEncapsulation.None,\n})\nexport class SignInComponent implements OnInit, OnChanges {\n  /**\n   * Big bold title text\n   */\n  @Input()\n  public heroText = 'Welcome!';\n\n  /**\n   * Description or weasle words about the application\n   */\n  @Input()\n  public subtitle = '';\n\n  /**\n   * Url of logo\n   */\n  @Input()\n  public logoUrl = '';\n\n  /**\n   * Is loading\n   *\n   * Will disable all inputs and show loading indicator\n   */\n  @Input()\n  public loading = false;\n\n  /**\n   * Route to sign up page\n   */\n  @Input()\n  public signUpRoute = '';\n\n  /**\n   * Require password\n   * Defaults to false\n   */\n  @Input()\n  public requirePassword = false;\n\n  /**\n   * Require email\n   * Defaults to true\n   */\n  @Input()\n  public requireEmail = true;\n\n  /**\n   * Route to forgotten password page\n   */\n  @Input()\n  public forgotPasswordRoute = '';\n\n  /**\n   * Type of alert. Possible options are:\n   * - info\n   * - success\n   * - warning\n   * - error\n   */\n  @Input()\n  public alertType = 'error';\n  // public alertType: AlertType = 'error';\n\n  /**\n   * Message to display\n   */\n  @Input()\n  public alertMessage = '';\n\n  /**\n   * Allow users to sign in anonymously?\n   */\n  @Input()\n  public allowAnonymousSignIn = false;\n\n  /**\n   * Text to display in the main sign in button.\n   * Default to \"Sign in\" if none is provided.\n   */\n  @Input()\n  public signInText = 'Sign in';\n\n  /**\n   * Emits the requested sign in\n   */\n  @Output()\n  public signIn = new EventEmitter<Partial<SignInModel> | undefined>();\n\n  /**\n   * Emits the requested anonymous sign in\n   */\n  @Output()\n  public signInAnonymously = new EventEmitter<void>();\n\n  /**\n   * @ignore\n   */\n  public emailControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordInputType: 'password' | 'text' = 'password';\n\n  public get emailError(): string {\n    if (this.emailControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    if (this.emailControl.hasError('email')) {\n      return 'Please enter a valid email address';\n    }\n\n    return '';\n  }\n\n  public get passwordError(): string {\n    if (this.passwordControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    return '';\n  }\n\n  public get passwordIcon(): string {\n    if (this.passwordInputType === 'password') {\n      return 'heroicons_solid:eye';\n    } else {\n      return 'heroicons_solid:eye-off';\n    }\n  }\n\n  constructor(private _formBuilder: FormBuilder) {}\n\n  /**\n   * @ignore\n   */\n  public ngOnInit(): void {\n    this.emailControl = this._formBuilder.control('', [\n      Validators.required,\n      Validators.email,\n    ]);\n    this.passwordControl = this._formBuilder.control('', [Validators.required]);\n\n    this.setupLoadingState();\n  }\n\n  /**\n   * @ignore\n   */\n  public ngOnChanges(changes: SimpleChanges): void {\n    const loadingChange =\n      changes['loading'] && !changes['loading'].isFirstChange();\n    const requireEmailChange =\n      changes['requireEmail'] && !changes['requireEmail'].isFirstChange();\n    const requirePasswordChange =\n      changes['requirePassword'] && !changes['requirePassword'].isFirstChange();\n    if (loadingChange || requireEmailChange || requirePasswordChange) {\n      this.setupLoadingState();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  private setupLoadingState(): void {\n    if (this.loading || !this.requireEmail) {\n      this.emailControl.disable();\n    } else {\n      this.emailControl.enable();\n    }\n\n    if (this.loading || !this.requirePassword) {\n      this.passwordControl.disable();\n    } else {\n      this.passwordControl.enable();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public togglePasswordVisability(): void {\n    if (this.passwordInputType === 'password') {\n      this.passwordInputType = 'text';\n    } else {\n      this.passwordInputType = 'password';\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public onFormSubmit(): void {\n    if (!this.requireEmail && !this.requirePassword) {\n      this.signIn.emit();\n    } else if (this.requireEmail && this.requirePassword) {\n      if (this.emailControl.valid && this.passwordControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n          password: this.passwordControl.value,\n        });\n      }\n    } else {\n      if (this.emailControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n        });\n      }\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public anonymousLoginClick() {\n    this.signInAnonymously.emit();\n  }\n}\n\n/**\n * Sign in for a new account\n */\nexport interface SignInModel {\n  email: string;\n  password: string;\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  EventEmitter,\n  Input,\n  OnChanges,\n  OnInit,\n  Output,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {\n  FormBuilder,\n  FormControl,\n  FormsModule,\n  ReactiveFormsModule,\n  Validators,\n} from '@angular/forms';\nimport { toolkitAnimations } from '../../styles/animations';\n\n@Component({\n  selector: 'jfc-sign-in',\n  standalone: true,\n  imports: [CommonModule, FormsModule, ReactiveFormsModule],\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  animations: toolkitAnimations,\n})\nexport class SignInComponent implements OnInit, OnChanges {\n  /**\n   * Big bold title text\n   */\n  @Input()\n  public heroText = 'Welcome!';\n\n  /**\n   * Description or weasle words about the application\n   */\n  @Input()\n  public subtitle = '';\n\n  /**\n   * Url of logo\n   */\n  @Input()\n  public logoUrl = '';\n\n  /**\n   * Is loading\n   *\n   * Will disable all inputs and show loading indicator\n   */\n  @Input()\n  public loading = false;\n\n  /**\n   * Route to sign up page\n   */\n  @Input()\n  public signUpRoute = '';\n\n  /**\n   * Require password\n   * Defaults to false\n   */\n  @Input()\n  public requirePassword = false;\n\n  /**\n   * Require email\n   * Defaults to true\n   */\n  @Input()\n  public requireEmail = true;\n\n  /**\n   * Route to forgotten password page\n   */\n  @Input()\n  public forgotPasswordRoute = '';\n\n  /**\n   * Type of alert. Possible options are:\n   * - info\n   * - success\n   * - warning\n   * - error\n   */\n  @Input()\n  public alertType = 'error';\n  // public alertType: AlertType = 'error';\n\n  /**\n   * Message to display\n   */\n  @Input()\n  public alertMessage = '';\n\n  /**\n   * Allow users to sign in anonymously?\n   */\n  @Input()\n  public allowAnonymousSignIn = false;\n\n  /**\n   * Text to display in the main sign in button.\n   * Default to \"Sign in\" if none is provided.\n   */\n  @Input()\n  public signInText = 'Sign in';\n\n  /**\n   * Emits the requested sign in\n   */\n  @Output()\n  public signIn = new EventEmitter<Partial<SignInModel> | undefined>();\n\n  /**\n   * Emits the requested anonymous sign in\n   */\n  @Output()\n  public signInAnonymously = new EventEmitter<void>();\n\n  /**\n   * @ignore\n   */\n  public emailControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordInputType: 'password' | 'text' = 'password';\n\n  public get emailError(): string {\n    if (this.emailControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    if (this.emailControl.hasError('email')) {\n      return 'Please enter a valid email address';\n    }\n\n    return '';\n  }\n\n  public get passwordError(): string {\n    if (this.passwordControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    return '';\n  }\n\n  public get passwordIcon(): string {\n    if (this.passwordInputType === 'password') {\n      return 'heroicons_solid:eye';\n    } else {\n      return 'heroicons_solid:eye-off';\n    }\n  }\n\n  constructor(private _formBuilder: FormBuilder) {}\n\n  /**\n   * @ignore\n   */\n  public ngOnInit(): void {\n    this.emailControl = this._formBuilder.control('', [\n      Validators.required,\n      Validators.email,\n    ]);\n    this.passwordControl = this._formBuilder.control('', [Validators.required]);\n\n    this.setupLoadingState();\n  }\n\n  /**\n   * @ignore\n   */\n  public ngOnChanges(changes: SimpleChanges): void {\n    const loadingChange =\n      changes['loading'] && !changes['loading'].isFirstChange();\n    const requireEmailChange =\n      changes['requireEmail'] && !changes['requireEmail'].isFirstChange();\n    const requirePasswordChange =\n      changes['requirePassword'] && !changes['requirePassword'].isFirstChange();\n    if (loadingChange || requireEmailChange || requirePasswordChange) {\n      this.setupLoadingState();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  private setupLoadingState(): void {\n    if (this.loading || !this.requireEmail) {\n      this.emailControl.disable();\n    } else {\n      this.emailControl.enable();\n    }\n\n    if (this.loading || !this.requirePassword) {\n      this.passwordControl.disable();\n    } else {\n      this.passwordControl.enable();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public togglePasswordVisability(): void {\n    if (this.passwordInputType === 'password') {\n      this.passwordInputType = 'text';\n    } else {\n      this.passwordInputType = 'password';\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public onFormSubmit(): void {\n    if (!this.requireEmail && !this.requirePassword) {\n      this.signIn.emit();\n    } else if (this.requireEmail && this.requirePassword) {\n      if (this.emailControl.valid && this.passwordControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n          password: this.passwordControl.value,\n        });\n      }\n    } else {\n      if (this.emailControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n        });\n      }\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public anonymousLoginClick() {\n    this.signInAnonymously.emit();\n  }\n}\n\n/**\n * Sign in for a new account\n */\nexport interface SignInModel {\n  email: string;\n  password: string;\n}\n",
             "properties": [
                 {
                     "name": "email",
@@ -17,7 +17,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 276
+                    "line": 260
                 },
                 {
                     "name": "password",
@@ -26,7 +26,7 @@
                     "type": "string",
                     "optional": false,
                     "description": "",
-                    "line": 277
+                    "line": 261
                 }
             ],
             "indexSignatures": [],
@@ -150,12 +150,10 @@
         },
         {
             "name": "SignInComponent",
-            "id": "component-SignInComponent-61f2a22c44f427f927cd00c78e8f1243f7e3d590e9e53357578d43fe74c14a6cee523f6f6384508eae60a3ec3338f5c807f36be64584dc749b23de6d674644e6",
+            "id": "component-SignInComponent-8865717ccccc6bf63c5a21ae98d35e42cb9603d859ea15107e0c41ef9e0d903f2a2756f9139f400c0a556419968f107106c62a316aa358cbf43c3c7a1cfc5e61",
             "file": "libs/ui-toolkit/src/lib/templates/sign-in/sign-in.component.ts",
             "changeDetection": "ChangeDetectionStrategy.OnPush",
-            "encapsulation": [
-                "ViewEncapsulation.None"
-            ],
+            "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
@@ -177,7 +175,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nMessage to display\n",
                     "description": "<p>Message to display</p>\n",
-                    "line": 114,
+                    "line": 98,
                     "type": "string",
                     "decorators": []
                 },
@@ -188,7 +186,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nType of alert. Possible options are:\n- info\n- success\n- warning\n- error\n",
                     "description": "<p>Type of alert. Possible options are:</p>\n<ul>\n<li>info</li>\n<li>success</li>\n<li>warning</li>\n<li>error</li>\n</ul>\n",
-                    "line": 107,
+                    "line": 91,
                     "type": "string",
                     "decorators": []
                 },
@@ -199,7 +197,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nAllow users to sign in anonymously?\n",
                     "description": "<p>Allow users to sign in anonymously?</p>\n",
-                    "line": 120,
+                    "line": 104,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -210,7 +208,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nRoute to forgotten password page\n",
                     "description": "<p>Route to forgotten password page</p>\n",
-                    "line": 97,
+                    "line": 81,
                     "type": "string",
                     "decorators": []
                 },
@@ -221,7 +219,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nBig bold title text\n",
                     "description": "<p>Big bold title text</p>\n",
-                    "line": 51,
+                    "line": 35,
                     "type": "string",
                     "decorators": []
                 },
@@ -232,7 +230,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nIs loading\n\nWill disable all inputs and show loading indicator\n",
                     "description": "<p>Is loading</p>\n<p>Will disable all inputs and show loading indicator</p>\n",
-                    "line": 71,
+                    "line": 55,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -243,7 +241,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nUrl of logo\n",
                     "description": "<p>Url of logo</p>\n",
-                    "line": 63,
+                    "line": 47,
                     "type": "string",
                     "decorators": []
                 },
@@ -254,7 +252,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nRequire email\nDefaults to true\n",
                     "description": "<p>Require email\nDefaults to true</p>\n",
-                    "line": 91,
+                    "line": 75,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -265,7 +263,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nRequire password\nDefaults to false\n",
                     "description": "<p>Require password\nDefaults to false</p>\n",
-                    "line": 84,
+                    "line": 68,
                     "type": "boolean",
                     "decorators": []
                 },
@@ -276,7 +274,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nText to display in the main sign in button.\nDefault to \"Sign in\" if none is provided.\n",
                     "description": "<p>Text to display in the main sign in button.\nDefault to &quot;Sign in&quot; if none is provided.</p>\n",
-                    "line": 127,
+                    "line": 111,
                     "type": "string",
                     "decorators": []
                 },
@@ -287,7 +285,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nRoute to sign up page\n",
                     "description": "<p>Route to sign up page</p>\n",
-                    "line": 77,
+                    "line": 61,
                     "type": "string",
                     "decorators": []
                 },
@@ -298,7 +296,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nDescription or weasle words about the application\n",
                     "description": "<p>Description or weasle words about the application</p>\n",
-                    "line": 57,
+                    "line": 41,
                     "type": "string",
                     "decorators": []
                 }
@@ -311,7 +309,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nEmits the requested sign in\n",
                     "description": "<p>Emits the requested sign in</p>\n",
-                    "line": 133,
+                    "line": 117,
                     "type": "EventEmitter"
                 },
                 {
@@ -321,7 +319,7 @@
                     "deprecationMessage": "",
                     "rawdescription": "\n\nEmits the requested anonymous sign in\n",
                     "description": "<p>Emits the requested anonymous sign in</p>\n",
-                    "line": 139,
+                    "line": 123,
                     "type": "EventEmitter"
                 }
             ],
@@ -334,11 +332,11 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  EventEmitter,\n  Input,\n  OnChanges,\n  OnInit,\n  Output,\n  SimpleChanges,\n  ViewEncapsulation,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {\n  FormBuilder,\n  FormControl,\n  FormsModule,\n  ReactiveFormsModule,\n  Validators,\n} from '@angular/forms';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatIconModule } from '@angular/material/icon';\nimport { MatCheckboxModule } from '@angular/material/checkbox';\nimport { MatProgressSpinnerModule } from '@angular/material/progress-spinner';\nimport { MatButtonModule } from '@angular/material/button';\nimport { toolkitAnimations } from '../../styles/animations';\n\n@Component({\n  selector: 'jfc-sign-in',\n  standalone: true,\n  imports: [\n    CommonModule,\n    FormsModule,\n    ReactiveFormsModule,\n    MatIconModule,\n    MatCheckboxModule,\n    MatInputModule,\n    MatProgressSpinnerModule,\n    MatButtonModule,\n  ],\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  animations: toolkitAnimations,\n  encapsulation: ViewEncapsulation.None,\n})\nexport class SignInComponent implements OnInit, OnChanges {\n  /**\n   * Big bold title text\n   */\n  @Input()\n  public heroText = 'Welcome!';\n\n  /**\n   * Description or weasle words about the application\n   */\n  @Input()\n  public subtitle = '';\n\n  /**\n   * Url of logo\n   */\n  @Input()\n  public logoUrl = '';\n\n  /**\n   * Is loading\n   *\n   * Will disable all inputs and show loading indicator\n   */\n  @Input()\n  public loading = false;\n\n  /**\n   * Route to sign up page\n   */\n  @Input()\n  public signUpRoute = '';\n\n  /**\n   * Require password\n   * Defaults to false\n   */\n  @Input()\n  public requirePassword = false;\n\n  /**\n   * Require email\n   * Defaults to true\n   */\n  @Input()\n  public requireEmail = true;\n\n  /**\n   * Route to forgotten password page\n   */\n  @Input()\n  public forgotPasswordRoute = '';\n\n  /**\n   * Type of alert. Possible options are:\n   * - info\n   * - success\n   * - warning\n   * - error\n   */\n  @Input()\n  public alertType = 'error';\n  // public alertType: AlertType = 'error';\n\n  /**\n   * Message to display\n   */\n  @Input()\n  public alertMessage = '';\n\n  /**\n   * Allow users to sign in anonymously?\n   */\n  @Input()\n  public allowAnonymousSignIn = false;\n\n  /**\n   * Text to display in the main sign in button.\n   * Default to \"Sign in\" if none is provided.\n   */\n  @Input()\n  public signInText = 'Sign in';\n\n  /**\n   * Emits the requested sign in\n   */\n  @Output()\n  public signIn = new EventEmitter<Partial<SignInModel> | undefined>();\n\n  /**\n   * Emits the requested anonymous sign in\n   */\n  @Output()\n  public signInAnonymously = new EventEmitter<void>();\n\n  /**\n   * @ignore\n   */\n  public emailControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordInputType: 'password' | 'text' = 'password';\n\n  public get emailError(): string {\n    if (this.emailControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    if (this.emailControl.hasError('email')) {\n      return 'Please enter a valid email address';\n    }\n\n    return '';\n  }\n\n  public get passwordError(): string {\n    if (this.passwordControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    return '';\n  }\n\n  public get passwordIcon(): string {\n    if (this.passwordInputType === 'password') {\n      return 'heroicons_solid:eye';\n    } else {\n      return 'heroicons_solid:eye-off';\n    }\n  }\n\n  constructor(private _formBuilder: FormBuilder) {}\n\n  /**\n   * @ignore\n   */\n  public ngOnInit(): void {\n    this.emailControl = this._formBuilder.control('', [\n      Validators.required,\n      Validators.email,\n    ]);\n    this.passwordControl = this._formBuilder.control('', [Validators.required]);\n\n    this.setupLoadingState();\n  }\n\n  /**\n   * @ignore\n   */\n  public ngOnChanges(changes: SimpleChanges): void {\n    const loadingChange =\n      changes['loading'] && !changes['loading'].isFirstChange();\n    const requireEmailChange =\n      changes['requireEmail'] && !changes['requireEmail'].isFirstChange();\n    const requirePasswordChange =\n      changes['requirePassword'] && !changes['requirePassword'].isFirstChange();\n    if (loadingChange || requireEmailChange || requirePasswordChange) {\n      this.setupLoadingState();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  private setupLoadingState(): void {\n    if (this.loading || !this.requireEmail) {\n      this.emailControl.disable();\n    } else {\n      this.emailControl.enable();\n    }\n\n    if (this.loading || !this.requirePassword) {\n      this.passwordControl.disable();\n    } else {\n      this.passwordControl.enable();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public togglePasswordVisability(): void {\n    if (this.passwordInputType === 'password') {\n      this.passwordInputType = 'text';\n    } else {\n      this.passwordInputType = 'password';\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public onFormSubmit(): void {\n    if (!this.requireEmail && !this.requirePassword) {\n      this.signIn.emit();\n    } else if (this.requireEmail && this.requirePassword) {\n      if (this.emailControl.valid && this.passwordControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n          password: this.passwordControl.value,\n        });\n      }\n    } else {\n      if (this.emailControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n        });\n      }\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public anonymousLoginClick() {\n    this.signInAnonymously.emit();\n  }\n}\n\n/**\n * Sign in for a new account\n */\nexport interface SignInModel {\n  email: string;\n  password: string;\n}\n",
+            "sourceCode": "import {\n  ChangeDetectionStrategy,\n  Component,\n  EventEmitter,\n  Input,\n  OnChanges,\n  OnInit,\n  Output,\n  SimpleChanges,\n} from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {\n  FormBuilder,\n  FormControl,\n  FormsModule,\n  ReactiveFormsModule,\n  Validators,\n} from '@angular/forms';\nimport { toolkitAnimations } from '../../styles/animations';\n\n@Component({\n  selector: 'jfc-sign-in',\n  standalone: true,\n  imports: [CommonModule, FormsModule, ReactiveFormsModule],\n  templateUrl: './sign-in.component.html',\n  styleUrls: ['./sign-in.component.scss'],\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  animations: toolkitAnimations,\n})\nexport class SignInComponent implements OnInit, OnChanges {\n  /**\n   * Big bold title text\n   */\n  @Input()\n  public heroText = 'Welcome!';\n\n  /**\n   * Description or weasle words about the application\n   */\n  @Input()\n  public subtitle = '';\n\n  /**\n   * Url of logo\n   */\n  @Input()\n  public logoUrl = '';\n\n  /**\n   * Is loading\n   *\n   * Will disable all inputs and show loading indicator\n   */\n  @Input()\n  public loading = false;\n\n  /**\n   * Route to sign up page\n   */\n  @Input()\n  public signUpRoute = '';\n\n  /**\n   * Require password\n   * Defaults to false\n   */\n  @Input()\n  public requirePassword = false;\n\n  /**\n   * Require email\n   * Defaults to true\n   */\n  @Input()\n  public requireEmail = true;\n\n  /**\n   * Route to forgotten password page\n   */\n  @Input()\n  public forgotPasswordRoute = '';\n\n  /**\n   * Type of alert. Possible options are:\n   * - info\n   * - success\n   * - warning\n   * - error\n   */\n  @Input()\n  public alertType = 'error';\n  // public alertType: AlertType = 'error';\n\n  /**\n   * Message to display\n   */\n  @Input()\n  public alertMessage = '';\n\n  /**\n   * Allow users to sign in anonymously?\n   */\n  @Input()\n  public allowAnonymousSignIn = false;\n\n  /**\n   * Text to display in the main sign in button.\n   * Default to \"Sign in\" if none is provided.\n   */\n  @Input()\n  public signInText = 'Sign in';\n\n  /**\n   * Emits the requested sign in\n   */\n  @Output()\n  public signIn = new EventEmitter<Partial<SignInModel> | undefined>();\n\n  /**\n   * Emits the requested anonymous sign in\n   */\n  @Output()\n  public signInAnonymously = new EventEmitter<void>();\n\n  /**\n   * @ignore\n   */\n  public emailControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordControl!: FormControl;\n\n  /**\n   * @ignore\n   */\n  public passwordInputType: 'password' | 'text' = 'password';\n\n  public get emailError(): string {\n    if (this.emailControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    if (this.emailControl.hasError('email')) {\n      return 'Please enter a valid email address';\n    }\n\n    return '';\n  }\n\n  public get passwordError(): string {\n    if (this.passwordControl.hasError('required')) {\n      return 'This is required';\n    }\n\n    return '';\n  }\n\n  public get passwordIcon(): string {\n    if (this.passwordInputType === 'password') {\n      return 'heroicons_solid:eye';\n    } else {\n      return 'heroicons_solid:eye-off';\n    }\n  }\n\n  constructor(private _formBuilder: FormBuilder) {}\n\n  /**\n   * @ignore\n   */\n  public ngOnInit(): void {\n    this.emailControl = this._formBuilder.control('', [\n      Validators.required,\n      Validators.email,\n    ]);\n    this.passwordControl = this._formBuilder.control('', [Validators.required]);\n\n    this.setupLoadingState();\n  }\n\n  /**\n   * @ignore\n   */\n  public ngOnChanges(changes: SimpleChanges): void {\n    const loadingChange =\n      changes['loading'] && !changes['loading'].isFirstChange();\n    const requireEmailChange =\n      changes['requireEmail'] && !changes['requireEmail'].isFirstChange();\n    const requirePasswordChange =\n      changes['requirePassword'] && !changes['requirePassword'].isFirstChange();\n    if (loadingChange || requireEmailChange || requirePasswordChange) {\n      this.setupLoadingState();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  private setupLoadingState(): void {\n    if (this.loading || !this.requireEmail) {\n      this.emailControl.disable();\n    } else {\n      this.emailControl.enable();\n    }\n\n    if (this.loading || !this.requirePassword) {\n      this.passwordControl.disable();\n    } else {\n      this.passwordControl.enable();\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public togglePasswordVisability(): void {\n    if (this.passwordInputType === 'password') {\n      this.passwordInputType = 'text';\n    } else {\n      this.passwordInputType = 'password';\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public onFormSubmit(): void {\n    if (!this.requireEmail && !this.requirePassword) {\n      this.signIn.emit();\n    } else if (this.requireEmail && this.requirePassword) {\n      if (this.emailControl.valid && this.passwordControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n          password: this.passwordControl.value,\n        });\n      }\n    } else {\n      if (this.emailControl.valid) {\n        this.signIn.emit({\n          email: this.emailControl.value,\n        });\n      }\n    }\n  }\n\n  /**\n   * @ignore\n   */\n  public anonymousLoginClick() {\n    this.signInAnonymously.emit();\n  }\n}\n\n/**\n * Sign in for a new account\n */\nexport interface SignInModel {\n  email: string;\n  password: string;\n}\n",
             "assetsDirs": [],
             "styleUrlsData": [
                 {
-                    "data": "// :host {\n//   display: block;\n// }\n",
+                    "data": ":host {\n  display: block;\n}\n",
                     "styleUrl": "./sign-in.component.scss"
                 }
             ],
@@ -356,7 +354,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 182,
+                "line": 166,
                 "jsdoctags": [
                     {
                         "name": "_formBuilder",
@@ -380,7 +378,7 @@
                         "name": "emailError",
                         "type": "string",
                         "returnType": "string",
-                        "line": 156
+                        "line": 140
                     }
                 },
                 "passwordError": {
@@ -389,7 +387,7 @@
                         "name": "passwordError",
                         "type": "string",
                         "returnType": "string",
-                        "line": 168
+                        "line": 152
                     }
                 },
                 "passwordIcon": {
@@ -398,11 +396,11 @@
                         "name": "passwordIcon",
                         "type": "string",
                         "returnType": "string",
-                        "line": 176
+                        "line": 160
                     }
                 }
             },
-            "templateData": "<div class=\"relative flex w-full min-h-screen\">\n  <div\n    class=\"flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0\"\n  >\n    <div\n      class=\"relative hidden md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-r\"\n    >\n      <!-- Rings -->\n      <svg\n        class=\"absolute inset-0 pointer-events-none\"\n        viewBox=\"0 0 960 540\"\n        width=\"100%\"\n        height=\"100%\"\n        preserveAspectRatio=\"xMidYMax slice\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <g\n          class=\"text-gray-700 opacity-25\"\n          fill=\"none\"\n          stroke=\"currentColor\"\n          stroke-width=\"100\"\n        >\n          <circle r=\"234\" cx=\"196\" cy=\"23\"></circle>\n          <circle r=\"234\" cx=\"790\" cy=\"491\"></circle>\n        </g>\n      </svg>\n      <!-- Dots -->\n      <svg\n        class=\"absolute -top-16 -right-16 text-gray-700\"\n        viewBox=\"0 0 220 192\"\n        width=\"220\"\n        height=\"192\"\n        fill=\"none\"\n      >\n        <defs>\n          <pattern\n            id=\"837c3e70-6c3a-44e6-8854-cc48c737b659\"\n            x=\"0\"\n            y=\"0\"\n            width=\"20\"\n            height=\"20\"\n            patternUnits=\"userSpaceOnUse\"\n          >\n            <rect x=\"0\" y=\"0\" width=\"4\" height=\"4\" fill=\"currentColor\"></rect>\n          </pattern>\n        </defs>\n        <rect\n          width=\"220\"\n          height=\"192\"\n          fill=\"url(#837c3e70-6c3a-44e6-8854-cc48c737b659)\"\n        ></rect>\n      </svg>\n      <!-- Content -->\n      <div class=\"z-10 relative w-full max-w-2xl\">\n        <div class=\"text-7xl font-bold leading-none text-gray-100\">\n          {{ heroText }}\n        </div>\n        <div class=\"mt-6 text-lg tracking-tight leading-6 text-gray-400\">\n          {{ subtitle }}\n        </div>\n      </div>\n    </div>\n    <div\n      class=\"md:flex md:justify-end w-full sm:w-auto md:h-full py-8 px-4 sm:p-12 md:p-16 md:pt-24 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card\"\n    >\n      <div class=\"w-full max-w-80 sm:w-80 mx-auto sm:mx-0\">\n        <!-- Logo -->\n        <img *ngIf=\"logoUrl\" [src]=\"logoUrl\" class=\"h-24\" />\n\n        <!-- Title -->\n        <div class=\"mt-8 text-4xl font-extrabold tracking-tight leading-tight\">\n          Sign in\n        </div>\n        <div *ngIf=\"signUpRoute\" class=\"flex items-baseline mt-0.5 font-medium\">\n          <div>Don't have an account?</div>\n          <a\n            class=\"ml-1 text-blue-500 hover:underline\"\n            [routerLink]=\"[signUpRoute]\"\n            >Sign up\n          </a>\n        </div>\n\n        <!-- Alert -->\n        <!-- <jfc-alert\n          class=\"mt-8 -mb-4\"\n          *ngIf=\"alertMessage\"\n          [appearance]=\"'outline'\"\n          [showIcon]=\"false\"\n          [type]=\"alertType\"\n          [@shake]=\"alertType === 'error'\"\n        >\n          {{ alertMessage }}\n        </jfc-alert> -->\n\n        <!-- Sign in form -->\n        <form class=\"mt-8\" #signInNgForm=\"ngForm\">\n          <!-- Email field -->\n          <mat-form-field\n            *ngIf=\"requireEmail\"\n            class=\"w-full\"\n            appearance=\"outline\"\n          >\n            <mat-label>Email address</mat-label>\n            <input id=\"email\" matInput [formControl]=\"emailControl\" />\n            <mat-error *ngIf=\"emailError\">\n              {{ emailError }}\n            </mat-error>\n          </mat-form-field>\n\n          <!-- Password field -->\n          <mat-form-field\n            *ngIf=\"requirePassword\"\n            class=\"w-full\"\n            appearance=\"outline\"\n          >\n            <mat-label>Password</mat-label>\n            <input\n              id=\"password\"\n              matInput\n              [type]=\"passwordInputType\"\n              [formControl]=\"passwordControl\"\n            />\n            <button\n              mat-icon-button\n              type=\"button\"\n              (click)=\"togglePasswordVisability()\"\n              matSuffix\n            >\n              <mat-icon class=\"icon-size-5\" [svgIcon]=\"passwordIcon\"></mat-icon>\n            </button>\n            <mat-error *ngIf=\"passwordError\">\n              {{ passwordError }}\n            </mat-error>\n          </mat-form-field>\n\n          <!-- Actions -->\n          <div class=\"inline-flex items-end justify-end w-full mt-1.5\">\n            <a\n              *ngIf=\"forgotPasswordRoute\"\n              class=\"text-md font-medium text-blue-500 hover:underline pb-5\"\n              [routerLink]=\"[forgotPasswordRoute]\"\n              >Forgot password?\n            </a>\n          </div>\n\n          <!-- Submit button -->\n          <button\n            class=\"w-full mt-6 h-10\"\n            mat-flat-button\n            [color]=\"'primary'\"\n            [disabled]=\"loading\"\n            (click)=\"onFormSubmit()\"\n          >\n            <span *ngIf=\"!loading\"> {{ signInText }} </span>\n            <mat-progress-spinner\n              *ngIf=\"loading\"\n              [diameter]=\"24\"\n              [mode]=\"'indeterminate'\"\n              class=\"mr-auto ml-auto\"\n            ></mat-progress-spinner>\n          </button>\n\n          <ng-container *ngIf=\"allowAnonymousSignIn\">\n            <!-- Separator -->\n            <div class=\"flex items-center mt-8\">\n              <div class=\"flex-auto mt-px border-t\"></div>\n              <div class=\"mx-2 text-secondary\">Or</div>\n              <div class=\"flex-auto mt-px border-t\"></div>\n            </div>\n\n            <!-- Anonymous sign-on button -->\n            <div class=\"flex items-center mt-8 space-x-4\">\n              <button\n                [disabled]=\"loading\"\n                (click)=\"anonymousLoginClick()\"\n                class=\"flex-auto\"\n                type=\"button\"\n                mat-stroked-button\n              >\n                Sign in anonymously\n              </button>\n            </div>\n          </ng-container>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
+            "templateData": "<div class=\"relative flex w-full min-h-screen\">\n  <div\n    class=\"flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0\"\n  >\n    <div\n      class=\"relative hidden md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-r\"\n    >\n      <!-- Rings -->\n      <svg\n        class=\"absolute inset-0 pointer-events-none\"\n        viewBox=\"0 0 960 540\"\n        width=\"100%\"\n        height=\"100%\"\n        preserveAspectRatio=\"xMidYMax slice\"\n        xmlns=\"http://www.w3.org/2000/svg\"\n      >\n        <g\n          class=\"text-gray-700 opacity-25\"\n          fill=\"none\"\n          stroke=\"currentColor\"\n          stroke-width=\"100\"\n        >\n          <circle r=\"234\" cx=\"196\" cy=\"23\"></circle>\n          <circle r=\"234\" cx=\"790\" cy=\"491\"></circle>\n        </g>\n      </svg>\n      <!-- Dots -->\n      <svg\n        class=\"absolute -top-16 -right-16 text-gray-700\"\n        viewBox=\"0 0 220 192\"\n        width=\"220\"\n        height=\"192\"\n        fill=\"none\"\n      >\n        <defs>\n          <pattern\n            id=\"837c3e70-6c3a-44e6-8854-cc48c737b659\"\n            x=\"0\"\n            y=\"0\"\n            width=\"20\"\n            height=\"20\"\n            patternUnits=\"userSpaceOnUse\"\n          >\n            <rect x=\"0\" y=\"0\" width=\"4\" height=\"4\" fill=\"currentColor\"></rect>\n          </pattern>\n        </defs>\n        <rect\n          width=\"220\"\n          height=\"192\"\n          fill=\"url(#837c3e70-6c3a-44e6-8854-cc48c737b659)\"\n        ></rect>\n      </svg>\n      <!-- Content -->\n      <div class=\"z-10 relative w-full max-w-2xl\">\n        <div class=\"text-7xl font-bold leading-none text-gray-100\">\n          {{ heroText }}\n        </div>\n        <div class=\"mt-6 text-lg tracking-tight leading-6 text-gray-400\">\n          {{ subtitle }}\n        </div>\n      </div>\n    </div>\n    <div\n      class=\"md:flex md:justify-end w-full sm:w-auto md:h-full py-8 px-4 sm:p-12 md:p-16 md:pt-24 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card\"\n    >\n      <div class=\"w-full max-w-80 sm:w-80 mx-auto sm:mx-0\">\n        <!-- Logo -->\n        <img *ngIf=\"logoUrl\" [src]=\"logoUrl\" class=\"h-24\" />\n\n        <!-- Title -->\n        <div class=\"mt-8 text-4xl font-extrabold tracking-tight leading-tight\">\n          Sign in\n        </div>\n        <div *ngIf=\"signUpRoute\" class=\"flex items-baseline mt-0.5 font-medium\">\n          <div>Don't have an account?</div>\n          <a\n            class=\"ml-1 text-blue-500 hover:underline\"\n            [routerLink]=\"[signUpRoute]\"\n            >Sign up\n          </a>\n        </div>\n\n        <!-- Alert -->\n        <jfc-alert\n          class=\"mt-8 -mb-4\"\n          *ngIf=\"alertMessage\"\n          [appearance]=\"'outline'\"\n          [showIcon]=\"false\"\n          [type]=\"alertType\"\n          [@shake]=\"alertType === 'error'\"\n        >\n          {{ alertMessage }}\n        </jfc-alert>\n\n        <!-- Sign in form -->\n        <form class=\"mt-8\" #signInNgForm=\"ngForm\">\n          <!-- Email field -->\n          <mat-form-field\n            *ngIf=\"requireEmail\"\n            class=\"w-full\"\n            appearance=\"outline\"\n          >\n            <mat-label>Email address</mat-label>\n            <input id=\"email\" matInput [formControl]=\"emailControl\" />\n            <mat-error *ngIf=\"emailError\">\n              {{ emailError }}\n            </mat-error>\n          </mat-form-field>\n\n          <!-- Password field -->\n          <mat-form-field\n            *ngIf=\"requirePassword\"\n            class=\"w-full\"\n            appearance=\"outline\"\n          >\n            <mat-label>Password</mat-label>\n            <input\n              id=\"password\"\n              matInput\n              [type]=\"passwordInputType\"\n              [formControl]=\"passwordControl\"\n            />\n            <button\n              mat-icon-button\n              type=\"button\"\n              (click)=\"togglePasswordVisability()\"\n              matSuffix\n            >\n              <mat-icon class=\"icon-size-5\" [svgIcon]=\"passwordIcon\"></mat-icon>\n            </button>\n            <mat-error *ngIf=\"passwordError\">\n              {{ passwordError }}\n            </mat-error>\n          </mat-form-field>\n\n          <!-- Actions -->\n          <div class=\"inline-flex items-end justify-end w-full mt-1.5\">\n            <a\n              *ngIf=\"forgotPasswordRoute\"\n              class=\"text-md font-medium text-blue-500 hover:underline pb-5\"\n              [routerLink]=\"[forgotPasswordRoute]\"\n              >Forgot password?\n            </a>\n          </div>\n\n          <!-- Submit button -->\n          <button\n            class=\"w-full mt-6 h-10\"\n            mat-flat-button\n            [color]=\"'primary'\"\n            [disabled]=\"loading\"\n            (click)=\"onFormSubmit()\"\n          >\n            <span *ngIf=\"!loading\"> {{ signInText }} </span>\n            <mat-progress-spinner\n              *ngIf=\"loading\"\n              [diameter]=\"24\"\n              [mode]=\"'indeterminate'\"\n              class=\"mr-auto ml-auto\"\n            ></mat-progress-spinner>\n          </button>\n\n          <ng-container *ngIf=\"allowAnonymousSignIn\">\n            <!-- Separator -->\n            <div class=\"flex items-center mt-8\">\n              <div class=\"flex-auto mt-px border-t\"></div>\n              <div class=\"mx-2 text-secondary\">Or</div>\n              <div class=\"flex-auto mt-px border-t\"></div>\n            </div>\n\n            <!-- Anonymous sign-on button -->\n            <div class=\"flex items-center mt-8 space-x-4\">\n              <button\n                [disabled]=\"loading\"\n                (click)=\"anonymousLoginClick()\"\n                class=\"flex-auto\"\n                type=\"button\"\n                mat-stroked-button\n              >\n                Sign in anonymously\n              </button>\n            </div>\n          </ng-container>\n        </form>\n      </div>\n    </div>\n  </div>\n</div>\n"
         }
     ],
     "modules": [],

@@ -88,6 +88,10 @@
           "json",
           "-d",
           "libs/ui-toolkit"
+        ],
+        "styles": [
+          "libs/ui-toolkit/src/lib/styles.scss",
+          "libs/ui-toolkit/.storybook/deeppurple-amber.css"
         ]
       },
       "configurations": {
